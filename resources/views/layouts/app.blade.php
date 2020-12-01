@@ -91,11 +91,7 @@
 
         </script>
 
-    <script  language="javascript">
-    function mysearch(){
-        alert('123');
-    }
-    </script>
+    
     </head>
     <body>
 
