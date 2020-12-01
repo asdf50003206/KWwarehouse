@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-<!--上層按鈕-->
+
 
 
 
@@ -24,19 +24,35 @@
                         <tbody>
                             <tr>
                                 <td>訂單號碼</td>
-                                <td>{{Form::text('tracking_number','')}}</td>
+                                @if (isset($inventory))
+                                <td>{{Form::text('tracking_number',$inventory->tracking_number)}}{{Form::submit('查詢',['class'=>'btn btn-light','name'=>'search'])}}</td>
+                                @else
+                                <td>{{Form::text('tracking_number','')}}{{Form::submit('查詢',['class'=>'btn btn-light','name'=>'search'])}}</td>
+                                @endif
+                                
                             </tr>
                             <tr>
-                                <td>品名</td>
-                                <td>{{Form::text('inventory_name','')}}</td>
+                                <td>預染顏色</td>
+                                <td>{{Form::text('color','')}}</td>
                             </tr>
                             <tr>
                                 <td>庫存疋數</td>
-                                <td>{{Form::text('inventory_quantity','')}}</td>
+                                @if (isset($inventory))
+                                <td>{{Form::text('inventory_quantity',$inventory->inventory_quantity,['readonly'])}}</td>
+                                @else
+                                <td>{{Form::text('inventory_quantity','',['readonly'])}}</td>
+                                @endif
+                                
                             </tr>
                             <tr>
                                 <td>庫存公斤數</td>
-                                <td>{{Form::text('inventory_weight','')}}</td>
+                                @if (isset($inventory))
+                                <td>{{Form::text('inventory_weight',$inventory->inventory_weight,['readonly'])}}</td>
+                                
+                                @else
+                                <td>{{Form::text('inventory_weight','',['readonly'])}}</td>
+                                @endif
+                                {{-- <td>{{Form::text('inventory_weight',$inventory->inventory_weight,['readonly'])}}</td> --}}
                             </tr>
                             <tr>
                                 <td>出貨日期</td>
@@ -54,14 +70,14 @@
                         </tbody>
                     </table>
                     @include('inc.message')
-                    {{Form::submit('送出')}}
+                    {{Form::submit('送出',['class'=>'btn btn-primary','name'=>'submit'])}}
                     {!! Form::close() !!}
                     
                 </div>
             </div>
             </div>
         </div>
-        <div class="col-1"></div>
+    <div class="col-1"></div>
     
         
         
@@ -70,4 +86,5 @@
         
     </div>
 </div>
+
 @endsection

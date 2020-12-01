@@ -33,7 +33,7 @@
                         <td>{{$history->created_at}}</td>
                         <td>{{$history->tracking_number_new}}</td>
                         <td>{{$history->action}}</td>
-                    <td><a href="/history/{{$history->id}}" class="btn btn-light">詳情</a></td>
+                    <td><a href="/WHmanagement/public/history/{{$history->id}}" class="btn btn-light">詳情</a></td>
                     </tr>
                         @endforeach
                     </tbody>

@@ -112,13 +112,21 @@ class PagesController extends Controller
         
     }
     public function shipment(){
+        
         return view('pages.shipment');
     }
 
     public function shipping(Request $request){
+
+        if(isset($_POST['search'])){
+            $this ->validate($request,['tracking_number' => 'required']);
+            $inventory = Warehouse::where('tracking_number',$request->input('tracking_number'))->first();
+            return view('pages.shipment')->with('inventory',$inventory);
+        }
+
+        if(isset($_POST['submit'])){
         $this ->validate($request,[
             'tracking_number' => 'required',
-            'inventory_name'=>'required',
             'inventory_quantity'=>'required',
             'inventory_weight'=>'required',
             'shipping_date'=>'required',
@@ -126,7 +134,7 @@ class PagesController extends Controller
             'shipping_weight'=>'required'
             ]);
 
-        $warehouse = Warehouse::where('tracking_number',$request->input('tracking_number'))->where('inventory_name',$request->input('inventory_name'))->first();
+        $warehouse = Warehouse::where('tracking_number',$request->input('tracking_number'))->first();
         if((int)$warehouse->inventory_quantity<(int)($request->input('shipping_quantity'))||(int)$warehouse->inventory_weight<(int)($request->input('shipping_weight'))){
             return redirect('/shipment')->with('error','無法出貨，存貨不足');
 
@@ -147,12 +155,10 @@ class PagesController extends Controller
         $warehouse->shipping_weight = $request->input('shipping_weight');
         $warehouse->save();
 
-        return redirect('/inventory/1');
+        return redirect('/inventory/1')->with('success','出貨成功');
         }
 
     }
-
-    public function shipping_update(){
 
     }
 }

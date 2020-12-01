@@ -20,6 +20,6 @@ Route::resource('purchase','PurchaseController');
 Route::get('/history','PagesController@showhistorylist');
 Route::get('/history/{id}','PagesController@showhistorydetail');
 Route::get('/shipment','PagesController@shipment');
-Route::post('/history','PagesController@shipping');
+Route::post('/shipment','PagesController@shipping');
 // Route::resource('example','example');
 Route::get('/excel/export','ExcelController@export');

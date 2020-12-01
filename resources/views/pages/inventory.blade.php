@@ -56,7 +56,7 @@
         {{Form::text('request_field'.$i,'')}}
         @endfor
         @if ($filter > 0)
-        <a class="btn btn-danger" href="/inventory/{{$filter-1}}">-</a>
+        <a class="btn btn-danger" href="/WHmanagement/public/inventory/{{$filter-1}}">-</a>
         @endif
         <br>
         {{Form::text("filter_number",$filter,['style' => 'display:none;'])}}
@@ -66,7 +66,7 @@
         ?>
         
         
-        <a class="btn btn-primary" href="/inventory/{{$filter+1}}">增加條件</a>
+        <a class="btn btn-primary" href="/WHmanagement/public/inventory/{{$filter+1}}">增加條件</a>
             {!! Form::close() !!}
             
         {{-- ------------- --}}
@@ -100,7 +100,7 @@
                 <td>{{$warehouse->inventory_quantity}}</td>
                 <td>{{$warehouse->inventory_weight}}</td>
                 <td>{{$warehouse->remark}}</td>
-                <td><a href="/purchase/{{$warehouse->id}}/edit" class="btn btn-light">修改</a></td>
+                <td><a href="/WHmanagement/public/purchase/{{$warehouse->id}}/edit" class="btn btn-light">修改</a></td>
                     </tr>
                     @endforeach
                 @endif
@@ -110,7 +110,7 @@
         </div>
 
 
-        <a href="/excel/export" class="btn btn-success">輸出EXCEL</a>
+        <a href="/WHmanagement/public/excel/export" class="btn btn-success">輸出EXCEL</a>
         </div>
         
         <div class="col-2"></div>

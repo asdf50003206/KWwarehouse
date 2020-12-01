@@ -104,7 +104,7 @@
                 </table>
             
             </div>
-            <a href="/excel/export" class="btn btn-success">輸出EXCEL</a>
+            <a href="/WHmanagement/public/excel/export" class="btn btn-success">輸出EXCEL</a>
         </div>
         <div class="col-2"></div>
     </div>
