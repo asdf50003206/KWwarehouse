@@ -15,17 +15,18 @@
 
 <!--主要內容-->
 @include('inc.message')
-<div class="container-fluid" >
-    <div class="row">
+<div class="container-fluid h-100" style="height: 100%">
+    <div class="row h-100">
         
             @include('layouts.menu')
         
         <div class="col-10 filter">
+            <div style="margin-top: 10px;margin-bottom: 10px">
             篩選
             {!! Form::open(['action' => 'PagesController@showfilter','method'=>'GET']) !!}
-            @for ($i = 1; $i <= $filter; $i++)
-            <br>{{Form::label('field'.$i,'欄位:')}}
-                {{Form::select('field'.$i,[
+           
+            <br>
+                {{Form::select('field',[
                     'id'=>'序號',
                     'purchase_date'=>'進貨日期',
                     'inventory_location'=>'庫位',
@@ -46,33 +47,27 @@
                     'inventory_weight'=>'庫存公斤數',
                     'remark'=>'備註'
         ],'id')}}
-        {{Form::label('condition'.$i,'條件:')}}
-        {{Form::select('condition'.$i,[
+        
+        {{Form::select('condition',[
             '>'=>'大於',
             '<'=>'小於',
             '='=>'等於',
             'LIKE'=>'包含'
         ],'=')}}
-        {{Form::text('request_field'.$i,'')}}
-        @endfor
-        @if ($filter > 0)
-        <a class="btn btn-danger" href="/WHmanagement/public/inventory/{{$filter-1}}">-</a>
-        @endif
+        {{Form::text('request_field','')}}
+        
+        
         <br>
-        {{Form::text("filter_number",$filter,['style' => 'display:none;'])}}
-        <?php if($filter > 0){
-        echo Form::submit('篩選');
-        }
-        ?>
         
         
-        <a class="btn btn-primary" href="/WHmanagement/public/inventory/{{$filter+1}}">增加條件</a>
+    {{Form::submit('篩選')}}
+        
             {!! Form::close() !!}
-            
+        </div>
         {{-- ------------- --}}
 
         <div class="main_table">
-            <table class="table table_striped" style="white-space: nowrap;">
+            <table class="table table-striped" style="white-space: nowrap;">
                 <thead>
                 <tr><th>序號</th><th>進貨日期</th><th>訂單號碼</th><th>庫位</th><th>挪單單號</th><th>品名</th><th>批號</th><th>織廠</th><th>車台</th><th>進貨疋數</th><th>進貨公斤</th><th>出貨日期</th><th>缸號</th><th>預染顏色</th><th>出貨疋數</th><th>出貨公斤</th><th>庫存疋數</th><th>庫存公斤</th><th>備註</th></tr>
                 </thead>
@@ -113,12 +108,6 @@
         <a href="/WHmanagement/public/excel/export" class="btn btn-success">輸出EXCEL</a>
         </div>
         
-        <div class="col-2"></div>
-    
-        <div class="col-2">
-            
-
-        </div>
         
         
         

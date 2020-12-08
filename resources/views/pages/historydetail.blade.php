@@ -8,9 +8,9 @@
 
 <!--主要內容-->
 @include('inc.message')
-<div class="container-fluid" >
+<div class="container-fluid h-100" >
     {{-- 篩選 --}}
-    <div class="row ">
+    <div class="row h-100">
         @include('layouts.menu')
         <div class="col-10  filter">
             
@@ -42,7 +42,7 @@
         
         </div>
         
-        <div class="col-2"></div>
+        
     </div>
     
 </div>        

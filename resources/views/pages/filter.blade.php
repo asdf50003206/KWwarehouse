@@ -15,17 +15,17 @@
 
 <!--主要內容-->
 @include('inc.message')
-<div class="container-fluid" >
-    <div class="row">
+<div class="container-fluid h-100" >
+    <div class="row h-100">
         
             @include('layouts.menu')
         
         <div class="col-10 filter">
+            <div style="margin-top: 10px;margin-bottom: 10px">
             篩選
             {!! Form::open(['action' => 'PagesController@showfilter','method'=>'GET']) !!}
-            @for ($i = 1; $i <=$filter; $i++)
-            <br>{{Form::label('field'.$i,'欄位:')}}
-                {{Form::select('field'.$i,[
+            <br>
+                {{Form::select('field',[
                     'id'=>'序號',
                     'purchase_date'=>'進貨日期',
                     'inventory_location'=>'庫位',
@@ -45,33 +45,25 @@
                     'inventory_quantity'=>'庫存疋數',
                     'inventory_weight'=>'庫存公斤數',
                     'remark'=>'備註'
-        ],$request_filter[($i-1)*3])}}
-        {{Form::label('condition'.$i,'條件:')}}
-        {{Form::select('condition'.$i,[
+        ],$request_filter[0])}}
+        
+        {{Form::select('condition',[
             '>'=>'大於',
             '<'=>'小於',
             "="=>'等於',
             'LIKE'=>'包含'
-        ],$request_filter[($i-1)*3+1])}}
-        {{Form::text('request_field'.$i,$request_filter[($i-1)*3+2])}}
-        @endfor
-        @if ($filter > 0)
-        <a class="btn btn-danger" href="/inventory/{{$filter-1}}">-</a>
-        @endif
+        ],$request_filter[1])}}
+        {{Form::text('request_field',$request_filter[2])}}
         <br>
-        {{Form::text("filter_number",$filter,['style' => 'display:none;'])}}
-        <?php if($filter > 0){
-        echo Form::submit('篩選');
-        }
-        ?>
+        
+         {{Form::submit('篩選')}}
         
         
-        <a class="btn btn-primary" href="/inventory/{{$filter+1}}">增加條件</a>
             {!! Form::close() !!}
             
-        
+        </div>
             <div class="main_table">
-                <table>
+                <table class="table table-striped">
                     <tr><td>序號</td><td>進貨日期</td><td>庫位</td><td>訂單號碼</td><td>挪單單號</td><td>品名</td><td>批號</td><td>織廠</td><td>車台</td><td>進貨疋數</td><td>進貨公斤</td><td>出貨日期</td><td>缸號</td><td>預染顏色</td><td>出貨疋數</td><td>出貨公斤</td><td>庫存疋數</td><td>庫存公斤</td><td>備註</td></tr>
                     
                     @if (count($warehouse)>0)
@@ -97,7 +89,7 @@
                     <td>{{$warehouse->inventory_quantity}}</td>
                     <td>{{$warehouse->inventory_weight}}</td>
                     <td>{{$warehouse->remark}}</td>
-                    <td><a href="/purchase/{{$warehouse->id}}/edit" class="btn btn-light">修改</a></td>
+                    <td><a href="/WHmanagement/public/purchase/{{$warehouse->id}}/edit" class="btn btn-light">修改</a></td>
                         </tr>
                         @endforeach
                     @endif
@@ -106,19 +98,9 @@
             </div>
             <a href="/WHmanagement/public/excel/export" class="btn btn-success">輸出EXCEL</a>
         </div>
-        <div class="col-2"></div>
+        
     </div>
 
-    <div class="row">
-        <div class="col-1">
-            
-        
-        </div>
-        
-        
-        
-        
-        
-    </div>
+
     
 @endsection

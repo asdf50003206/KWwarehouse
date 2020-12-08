@@ -15,15 +15,40 @@
 
 <!--主要內容-->
 @include('inc.message')
-<div class="container-fluid" >
+<div class="container-fluid h-100" >
     {{-- 篩選 --}}
-    <div class="row">
+    <div class="row h-100">
         @include('layouts.menu')
         <div class="col-10 filter">
+            
             <div class="text-center" style="font-size:32px">歷史紀錄</div>
             <div class="row justify-content-center">
             <div class="col-6 align-self-center main_table">
-                <table class="table table_striped" style="overflow:auto;white-space: nowrap;">
+                <div style="margin-top: 10px;margin-bottom: 10px">
+                    篩選
+                    {!! Form::open(['action' => 'PagesController@showhistorylist','method'=>'GET']) !!}
+                   
+                    <br>
+                        {{Form::select('field',[
+                            'purchase_date'=>'進貨日期',    
+                            
+
+                            'tracking_number'=>'訂單單號',
+                            
+                ],'id')}}
+                
+                
+                ：{{Form::text('request_field','')}}
+                
+                
+                <br>
+                
+                
+            {{Form::submit('篩選')}}
+                
+                    {!! Form::close() !!}
+                </div>
+                <table class="table table-striped" style="overflow:auto;white-space: nowrap;">
                     <thead>
                         <tr><th>日期</th><th>訂單編號</th><th>動作</th><th></th></tr>
                     </thead>

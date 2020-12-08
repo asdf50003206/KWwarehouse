@@ -15,8 +15,8 @@
 
 <!--主要內容-->
 @include('inc.message')
-<div class="container-fluid" >
-    <div class="row">
+<div class="container-fluid h-100" >
+    <div class="row h-100">
         @include('layouts.menu')
         <div class="col-10 filter">
             <div class="text-center" style="font-size:32px">進貨單</div>
@@ -152,7 +152,7 @@
             </div>
         </div>
         </div>
-        <div class="col-2"></div>
+        
     </div>
 </div>        
 <div class="container-sm">

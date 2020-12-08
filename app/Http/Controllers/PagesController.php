@@ -14,11 +14,11 @@ class PagesController extends Controller
         return view('welcome');
     }
     //庫存頁面
-    public function showinventory($filter){
+    public function showinventory(){
 
         Session::forget('request_filter');
             $warehouse = Warehouse::orderBy('id','asc')->get();
-            return view('pages.inventory')->with('warehouse',$warehouse)->with('filter',$filter);
+            return view('pages.inventory')->with('warehouse',$warehouse);
         
             
     }
@@ -27,33 +27,31 @@ class PagesController extends Controller
         $request_filter = 'SELECT * FROM warehouses WHERE ';
         
         
-        for($i =1;$i<=$request->input('filter_number');$i++){
             $this ->validate($request,[
-                'request_field'.$i =>'required'
+                'request_field' =>'required'
                 ]);
-                if(is_int($request->input('request_field'.$i))){
-                    $request_filter = $request_filter.$request->input('field'.$i).' '.$request->input('condition'.$i).' '.$request->input('request_field'.$i).' ';
+                if(is_int($request->input('request_field'))){
+                    $request_filter = $request_filter.$request->input('field').' '.$request->input('condition').' '.$request->input('request_field').' ';
                 }
-                elseif($request->input('condition'.$i) == 'LIKE'){
-                    $request_filter = $request_filter.$request->input('field'.$i).' '.$request->input('condition'.$i).' \'%'.$request->input('request_field'.$i).'%\'';
+                elseif($request->input('condition') == 'LIKE'){
+                    $request_filter = $request_filter.$request->input('field').' '.$request->input('condition').' \'%'.$request->input('request_field').'%\'';
                 }
                 else{
-                    $request_filter = $request_filter.$request->input('field'.$i).' '.$request->input('condition'.$i).' \''.$request->input('request_field'.$i).'\' ';
+                    $request_filter = $request_filter.$request->input('field').' '.$request->input('condition').' \''.$request->input('request_field').'\' ';
                 }
             
-            if($i != $request->input('filter_number')){
-                $request_filter = $request_filter.'AND ';
-            }
-        }
+        -
+        
+
         $array = array();
-        for ($i =1;$i <=$request->input('filter_number');$i++){
-            array_push($array,$request->input('field'.$i));
-            array_push($array,$request->input('condition'.$i));
-            array_push($array,$request->input('request_field'.$i));
-        }
+        
+            array_push($array,$request->input('field'));
+            array_push($array,$request->input('condition'));
+            array_push($array,$request->input('request_field'));
+       
         Session::put('request_filter',$request_filter);
         $warehouse = DB::select($request_filter);
-        return view('pages.filter')->with('warehouse',$warehouse)->with('filter',$request->input('filter_number'))->with('request_filter',$array);
+        return view('pages.filter')->with('warehouse',$warehouse)->with('request_filter',$array);
     }
     //歷史紀錄清單
     public function showhistorylist(){
@@ -121,7 +119,13 @@ class PagesController extends Controller
         if(isset($_POST['search'])){
             $this ->validate($request,['tracking_number' => 'required']);
             $inventory = Warehouse::where('tracking_number',$request->input('tracking_number'))->first();
-            return view('pages.shipment')->with('inventory',$inventory);
+            if (is_null($inventory)){
+                return redirect('/shipment')->with('error','查無此訂單');
+            }
+            else{
+                return view('pages.shipment')->with('inventory',$inventory);
+            }
+            
         }
 
         if(isset($_POST['submit'])){
@@ -142,6 +146,8 @@ class PagesController extends Controller
         else{
         $history = new History;
         $history->action = '出貨'; 
+        $history->tracking_number_old = $request->input('tracking_number');
+        $history->tracking_number_new = $request->input('tracking_number');
         $history->inventory_quantity_old = $warehouse->inventory_quantity;
         $history->inventory_quantity_new = (int)($warehouse->inventory_quantity)-(int)($request->input('shipping_quantity'));
         $history->inventory_weight_old = $warehouse->inventory_weight;
@@ -155,7 +161,7 @@ class PagesController extends Controller
         $warehouse->shipping_weight = $request->input('shipping_weight');
         $warehouse->save();
 
-        return redirect('/inventory/1')->with('success','出貨成功');
+        return redirect('/inventory')->with('success','出貨成功');
         }
 
     }

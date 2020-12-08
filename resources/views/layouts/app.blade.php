@@ -31,6 +31,8 @@
                 border: 1px solid black;
                 border-radius:5px;
                 height: 600px;
+                padding:0;
+                margin: 0;
                 overflow: auto;
             }
             .actived{
@@ -77,6 +79,12 @@
                 position:sticky;
                 top: 0 ;
                 background-color: #fff;
+            }
+            html,body{
+                height: 100%;
+                padding: 0;
+                margin: 0;
+
             }
         </style>
 

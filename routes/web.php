@@ -12,7 +12,7 @@
 */
 
 Route::get('/', 'PagesController@index');
-Route::get('/inventory/{filter}','PagesController@showinventory');
+Route::get('/inventory','PagesController@showinventory');
 Route::get('/filter','PagesController@showfilter');
 // Route::get('/purchase/{loop_number}','PagesController@purchaseform');
 // Route::post('/purchase','PagesController@purchasesotre');
